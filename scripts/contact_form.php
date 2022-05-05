@@ -1,0 +1,27 @@
+<?php
+    session_start();
+    
+    if(!empty($_POST["send"])) {
+      $name = $_POST["name"];
+      $email = $_POST["email"];
+      $captcha = $_POST["captcha"];
+      $captchaUser = filter_var($_POST["captcha"], FILTER_SANITIZE_STRING);
+      if(empty($captcha)) {
+        $captchaError = array(
+          "status" => "alert-danger",
+          "message" => "Entrez le code captcha."
+        );
+      }
+      else if($_SESSION['CAPTCHA_CODE'] == $captchaUser){
+        $captchaError = array(
+          "status" => "alert-success",
+          "message" => "Succès."
+        );
+      } else {
+        $captchaError = array(
+          "status" => "alert-danger",
+          "message" => "Captcha invalide."
+        );
+      }
+    }  
+?>
